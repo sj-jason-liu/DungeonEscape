@@ -15,6 +15,7 @@ public class Player : MonoBehaviour
     private Rigidbody2D _rb;
     private PlayerAnimation _playerAnim;
     private SpriteRenderer _sprite;
+    private GameObject _swordArcObject;
     
     void Start()
     {
@@ -24,6 +25,11 @@ public class Player : MonoBehaviour
         if(_sprite == null)
         {
             Debug.LogError("Spriterenderer is null!");
+        }
+        _swordArcObject = transform.GetChild(1).gameObject;
+        if(_swordArcObject == null)
+        {
+            Debug.LogError("Sword Arc is NULL!");
         }
     }
 
@@ -71,13 +77,20 @@ public class Player : MonoBehaviour
 
     void Flip(float facing)
     {
+        Vector3 newPos = _swordArcObject.transform.localPosition;
         if (facing < 0)
         {
             _sprite.flipX = true;
+            newPos.x = -1.01f;
+            _swordArcObject.transform.localPosition = newPos;
+            _swordArcObject.GetComponent<SpriteRenderer>().flipY = true;
         }
         else if (facing > 0)
         {
             _sprite.flipX = false;
+            newPos.x = 1.01f;
+            _swordArcObject.transform.localPosition = newPos;
+            _swordArcObject.GetComponent<SpriteRenderer>().flipY = false;
         }
     }
 
