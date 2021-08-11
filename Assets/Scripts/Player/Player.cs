@@ -106,5 +106,6 @@ public class Player : MonoBehaviour, IDamageable
     public void Damage()
     {
         Debug.Log("Hit: " + name);
+        Health--;
     }
 }
