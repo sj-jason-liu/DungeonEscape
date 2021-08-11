@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Player : MonoBehaviour
+public class Player : MonoBehaviour, IDamageable
 {
     [SerializeField]
     private float _jumpForce = 5f;
@@ -16,6 +16,8 @@ public class Player : MonoBehaviour
     private PlayerAnimation _playerAnim;
     private SpriteRenderer _sprite;
     private GameObject _swordArcObject;
+
+    public int Health { get; set; }
     
     void Start()
     {
@@ -80,14 +82,14 @@ public class Player : MonoBehaviour
         Vector3 newPos = _swordArcObject.transform.localPosition;
         if (facing < 0)
         {
-            _sprite.flipX = true;
+            _sprite.transform.localScale = new Vector3(-1, 1, 1);
             newPos.x = -1.01f;
             _swordArcObject.transform.localPosition = newPos;
             _swordArcObject.GetComponent<SpriteRenderer>().flipY = true;
         }
         else if (facing > 0)
         {
-            _sprite.flipX = false;
+            _sprite.transform.localScale = new Vector3(1, 1, 1);
             newPos.x = 1.01f;
             _swordArcObject.transform.localPosition = newPos;
             _swordArcObject.GetComponent<SpriteRenderer>().flipY = false;
@@ -99,5 +101,10 @@ public class Player : MonoBehaviour
         _resetJump = true;
         yield return new WaitForSeconds(0.1f);
         _resetJump = false;
+    }
+
+    public void Damage()
+    {
+        Debug.Log("Hit: " + name);
     }
 }

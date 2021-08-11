@@ -9,14 +9,18 @@ public abstract class Enemy : MonoBehaviour
     [SerializeField]
     protected float speed;
     [SerializeField]
+    protected float detectRange = 2f;
+    [SerializeField]
     protected int gems;
     [SerializeField]
     protected Transform _pointA, _pointB;
 
-    protected Vector3 targetPosition;
+    protected Vector3 targetPosition, currentSpriteScale;
     protected Animator anim;
     protected SpriteRenderer sprite;
+    protected Player player;
     protected bool movingLeft;
+    protected bool hasHit;
 
     public virtual void Init()
     {
@@ -30,6 +34,13 @@ public abstract class Enemy : MonoBehaviour
         {
             Debug.LogError("SpriteRenderer is NULL");
         }
+        player = GameObject.FindGameObjectWithTag("Player").GetComponent<Player>();
+        if(player == null)
+        {
+            Debug.LogError("Player if NULL");
+        }
+        currentSpriteScale = sprite.transform.localScale;
+        //Debug.Log("Scale of " + name + " sprite: " + currentSpriteScale);
     }
 
     private void Start()
@@ -39,14 +50,16 @@ public abstract class Enemy : MonoBehaviour
 
     public virtual void Update()
     {
-        if (anim.GetCurrentAnimatorStateInfo(0).IsName("Idle"))
+        if (anim.GetCurrentAnimatorStateInfo(0).IsName("Idle") && anim.GetBool("InCombat") == false)
             return;
         Movement();
     }
 
     public virtual void Movement()
     {
-        sprite.flipX = movingLeft;
+        float facing = movingLeft ? -1 : 1;
+        sprite.transform.localScale
+            = new Vector3(currentSpriteScale.x * facing, currentSpriteScale.y, currentSpriteScale.z);
         switch (movingLeft)
         {
             case true:
@@ -63,6 +76,34 @@ public abstract class Enemy : MonoBehaviour
             anim.SetTrigger("Idle");
         }
 
-        transform.position = Vector3.MoveTowards(transform.position, targetPosition, speed * Time.deltaTime);
+        if(!hasHit)
+            transform.position = Vector3.MoveTowards(transform.position, targetPosition, speed * Time.deltaTime);
+
+        if(Vector3.Distance(transform.position, player.transform.position) > detectRange)
+        {
+            hasHit = false;
+            anim.SetBool("InCombat", false);
+        }
+
+        Vector3 direction = player.transform.localPosition - transform.localPosition;
+        if(anim.GetBool("InCombat"))
+        {
+            if(direction.x > 0)
+            {
+                sprite.transform.localScale
+                    = new Vector3(currentSpriteScale.x * 1, currentSpriteScale.y, currentSpriteScale.z);
+            }
+            else if(direction.x < 0)
+            {
+                sprite.transform.localScale
+                    = new Vector3(currentSpriteScale.x * -1, currentSpriteScale.y, currentSpriteScale.z);
+            }
+        }
+    }
+
+    private void OnDrawGizmos()
+    {
+        Gizmos.DrawWireSphere(transform.position, detectRange);
+        Gizmos.color = Color.red;
     }
 }

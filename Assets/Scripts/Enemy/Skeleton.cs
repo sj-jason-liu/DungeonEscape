@@ -9,21 +9,19 @@ public class Skeleton : Enemy, IDamageable
     public override void Init()
     {
         base.Init();
-        //assign health to enemy health
-        Health = base.health;
+        Health = health;
     }
 
     public void Damage()
     {
-        //subtract 1 from health
         Health--;
-        Debug.Log("Current health: " + Health);
+        anim.SetTrigger("Hit");
+        hasHit = true;
+        anim.SetBool("InCombat", true);
 
-        //if health is less than 1
-        //destroy the object
         if(Health < 1)
         {
-            Destroy(gameObject);
+            //Destroy(gameObject);
         }
     }
 }
