@@ -18,16 +18,27 @@ public class Spider : Enemy, IDamageable
 
     public void Damage()
     {
+        if (isDead)
+            return;
+
         Health--;
         if(Health < 1)
         {
+            isDead = true;
             anim.SetTrigger("Death");
+            GameObject gem = Instantiate(diamondPrefab, transform.position, Quaternion.identity);
+            gem.GetComponent<Diamond>().gem = gems;
         }
     }
 
     public override void Movement()
     {
         //stand still
+    }
+
+    public override void Update()
+    {
+        //prevent animator bool InCombat warning.
     }
 
     public void Attack()

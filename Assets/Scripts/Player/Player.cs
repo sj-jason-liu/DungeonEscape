@@ -9,8 +9,13 @@ public class Player : MonoBehaviour, IDamageable
     [SerializeField]
     private float _speed = 3f;
 
+    [SerializeField]
+    private int _health = 10;
+    private int _diamond;
+
     private bool _grounded;
     private bool _resetJump = false;
+    private bool _isDead;
     
     private Rigidbody2D _rb;
     private PlayerAnimation _playerAnim;
@@ -33,11 +38,13 @@ public class Player : MonoBehaviour, IDamageable
         {
             Debug.LogError("Sword Arc is NULL!");
         }
+        Health = _health;
     }
 
     void Update()
     {
-        Movement();
+        if(!_isDead)
+            Movement();
 
         if (Input.GetMouseButtonDown(0) && IsGrounded() == true)
         {
@@ -103,9 +110,20 @@ public class Player : MonoBehaviour, IDamageable
         _resetJump = false;
     }
 
+    public void AddDiamond(int diamondCollected)
+    {
+        _diamond += diamondCollected;
+        Debug.Log("Current diamond ammouts: " + _diamond);
+    }
+
     public void Damage()
     {
         Debug.Log("Hit: " + name);
         Health--;
+        if (Health < 1)
+        {
+            _playerAnim.Death();
+            _isDead = true;
+        }
     }
 }

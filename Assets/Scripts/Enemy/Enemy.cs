@@ -14,6 +14,8 @@ public abstract class Enemy : MonoBehaviour
     protected int gems;
     [SerializeField]
     protected Transform _pointA, _pointB;
+    [SerializeField]
+    protected GameObject diamondPrefab;
 
     protected Vector3 targetPosition, currentSpriteScale;
     protected Animator anim;
@@ -21,6 +23,7 @@ public abstract class Enemy : MonoBehaviour
     protected Player player;
     protected bool movingLeft;
     protected bool hasHit;
+    protected bool isDead;
 
     public virtual void Init()
     {
@@ -52,7 +55,8 @@ public abstract class Enemy : MonoBehaviour
     {
         if (anim.GetCurrentAnimatorStateInfo(0).IsName("Idle") && anim.GetBool("InCombat") == false)
             return;
-        Movement();
+        if(!isDead)
+            Movement();
     }
 
     public virtual void Movement()
