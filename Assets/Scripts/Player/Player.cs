@@ -11,6 +11,7 @@ public class Player : MonoBehaviour, IDamageable
 
     [SerializeField]
     private int _health = 10;
+    [SerializeField]
     private int _diamond;
 
     private bool _grounded;
@@ -114,6 +115,17 @@ public class Player : MonoBehaviour, IDamageable
     {
         _diamond += diamondCollected;
         Debug.Log("Current diamond ammouts: " + _diamond);
+    }
+
+    public int CurrentDiamondCount()
+    {
+        return _diamond;
+    }
+
+    public void PurchasedDiamondCount(int cost)
+    {
+        _diamond -= cost;
+        UIManager.Instance.OpenShop(_diamond);
     }
 
     public void Damage()
