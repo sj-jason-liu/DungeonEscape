@@ -114,7 +114,7 @@ public class Player : MonoBehaviour, IDamageable
     public void AddDiamond(int diamondCollected)
     {
         _diamond += diamondCollected;
-        Debug.Log("Current diamond ammouts: " + _diamond);
+        UIManager.Instance.UpdateGemCount(_diamond);
     }
 
     public int CurrentDiamondCount()

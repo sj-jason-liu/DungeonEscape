@@ -27,6 +27,8 @@ public class UIManager : MonoBehaviour
     private Text _playerGemCount;
     [SerializeField]
     private Image _selectImg;
+    [SerializeField]
+    private Text _gemCountText;
 
     public void OpenShop(int gemCount)
     {
@@ -38,5 +40,10 @@ public class UIManager : MonoBehaviour
     {
         _selectImg.rectTransform.anchoredPosition
             = new Vector2(_selectImg.rectTransform.anchoredPosition.x, yAxis);
+    }
+
+    public void UpdateGemCount(int count)
+    {
+        _gemCountText.text = "" + count;
     }
 }
