@@ -29,6 +29,8 @@ public class UIManager : MonoBehaviour
     private Image _selectImg;
     [SerializeField]
     private Text _gemCountText;
+    [SerializeField]
+    private Image[] _lives;
 
     public void OpenShop(int gemCount)
     {
@@ -45,5 +47,13 @@ public class UIManager : MonoBehaviour
     public void UpdateGemCount(int count)
     {
         _gemCountText.text = "" + count;
+    }
+
+    public void UpdateLives(int livesRemaining)
+    {
+        for(int i = 4; i != livesRemaining; i--)
+        {
+            _lives[i-1].enabled = false;
+        }
     }
 }

@@ -44,8 +44,10 @@ public class Player : MonoBehaviour, IDamageable
 
     void Update()
     {
-        if(!_isDead)
-            Movement();
+        if (_isDead)
+            return;
+
+        Movement();
 
         if (Input.GetMouseButtonDown(0) && IsGrounded() == true)
         {
@@ -130,12 +132,18 @@ public class Player : MonoBehaviour, IDamageable
 
     public void Damage()
     {
-        Debug.Log("Hit: " + name);
         Health--;
+        Debug.Log("Current health: " + Health);
+        UIManager.Instance.UpdateLives(Health);
         if (Health < 1)
         {
             _playerAnim.Death();
             _isDead = true;
         }
+    }
+
+    public bool DeathState()
+    {
+        return _isDead;
     }
 }
