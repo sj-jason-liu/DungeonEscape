@@ -47,15 +47,15 @@ public class ShopSystem : MonoBehaviour
         switch(item)
         {
             case 0:
-                UIManager.Instance.UpdateShopSelect(90);
+                UIManager.Instance.UpdateShopSelect(85);
                 _currentItemCost = 300;
                 break;
             case 1:
-                UIManager.Instance.UpdateShopSelect(-13);
+                UIManager.Instance.UpdateShopSelect(-39);
                 _currentItemCost = 500;
                 break;
             case 2:
-                UIManager.Instance.UpdateShopSelect(-125);
+                UIManager.Instance.UpdateShopSelect(-163);
                 _currentItemCost = 100;
                 break;
         }

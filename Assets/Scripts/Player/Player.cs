@@ -118,6 +118,7 @@ public class Player : MonoBehaviour, IDamageable
     {
         _diamond += diamondCollected;
         UIManager.Instance.UpdateGemCount(_diamond);
+        UIManager.Instance.OpenShop(_diamond);
     }
 
     public int CurrentDiamondCount()
@@ -128,6 +129,7 @@ public class Player : MonoBehaviour, IDamageable
     public void PurchasedDiamondCount(int cost)
     {
         _diamond -= cost;
+        UIManager.Instance.UpdateGemCount(_diamond);
         UIManager.Instance.OpenShop(_diamond);
     }
 
