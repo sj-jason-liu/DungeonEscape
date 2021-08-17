@@ -74,20 +74,26 @@ public class Player : MonoBehaviour, IDamageable
 
         Flip(horiInput);
 
-        if (CrossPlatformInputManager.GetButtonDown("Button_A") || Input.GetKeyDown(KeyCode.Space) && IsGrounded() == true)
+        if (IsGrounded() == true)
         {
-            _playerAnim.Jumping(true);
-            StartCoroutine(ResetJumpRoutine());
-            _rb.velocity = new Vector2(_rb.velocity.x, _jumpForce);
+            if(CrossPlatformInputManager.GetButtonDown("Button_A") || Input.GetKeyDown(KeyCode.Space))
+            {
+                _playerAnim.Jumping(true);
+                StartCoroutine(ResetJumpRoutine());
+                _rb.velocity = new Vector2(_rb.velocity.x, _jumpForce);
+            }            
         }
-        //else if(CrossPlatformInputManager.GetButtonDown("Button_A") || Input.GetKeyDown(KeyCode.Space) && IsGrounded() == false)
-        //{
-        //    if (!_hasDoubleJumped)
-        //    {
-        //        _rb.velocity += new Vector2(_rb.velocity.x, _jumpForce);
-        //        _hasDoubleJumped = true;
-        //    }
-        //}
+        else if(_hasBoots)
+        {
+            if(CrossPlatformInputManager.GetButtonDown("Button_A") || Input.GetKeyDown(KeyCode.Space))
+            {
+                if(!_hasDoubleJumped)
+                {
+                    _rb.velocity = new Vector2(_rb.velocity.x, _jumpForce * 1.5f);
+                    _hasDoubleJumped = true;
+                }
+            }
+        }
         _rb.velocity = new Vector2(move, _rb.velocity.y);
     }
 
@@ -96,7 +102,7 @@ public class Player : MonoBehaviour, IDamageable
         RaycastHit2D hit = Physics2D.Raycast(transform.position, Vector2.down, 0.8f, 1 << 8);
         if (hit.collider != null)
         {
-            _hasDoubleJumped = true;
+            _hasDoubleJumped = false;
             if (_resetJump == false)
             {
                 _playerAnim.Jumping(false);
