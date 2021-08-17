@@ -23,4 +23,8 @@ public class GameManager : MonoBehaviour
     }
 
     public bool HasCastleKey { get; set; }
+
+    public bool HasFlameSword { get; set; }
+
+    public bool HasFlightBoots { get; set; }
 }

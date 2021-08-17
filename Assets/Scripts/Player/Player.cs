@@ -15,9 +15,9 @@ public class Player : MonoBehaviour, IDamageable
     [SerializeField]
     private int _diamond;
 
-    private bool _grounded;
-    private bool _resetJump = false;
-    private bool _isDead;
+    private bool _grounded, _resetJump, _hasDoubleJumped, _isDead;
+    [SerializeField]
+    private bool _hasFlameSword, _hasBoots, _hasKey;
     
     private Rigidbody2D _rb;
     private PlayerAnimation _playerAnim;
@@ -48,11 +48,20 @@ public class Player : MonoBehaviour, IDamageable
         if (_isDead)
             return;
 
+        GetItemCheck();
+
         Movement();
 
         if (CrossPlatformInputManager.GetButtonDown("Button_B") && IsGrounded() == true)
         {
-            _playerAnim.Attack();
+            if(_hasFlameSword)
+            {
+                _playerAnim.FlameAttack();
+            }
+            else
+            {
+                _playerAnim.Attack();
+            }
         }
     }
 
@@ -64,13 +73,21 @@ public class Player : MonoBehaviour, IDamageable
         _grounded = IsGrounded();
 
         Flip(horiInput);
-        
-        if(CrossPlatformInputManager.GetButtonDown("Button_A") && IsGrounded() == true)
+
+        if (CrossPlatformInputManager.GetButtonDown("Button_A") || Input.GetKeyDown(KeyCode.Space) && IsGrounded() == true)
         {
             _playerAnim.Jumping(true);
             StartCoroutine(ResetJumpRoutine());
             _rb.velocity = new Vector2(_rb.velocity.x, _jumpForce);
         }
+        //else if(CrossPlatformInputManager.GetButtonDown("Button_A") || Input.GetKeyDown(KeyCode.Space) && IsGrounded() == false)
+        //{
+        //    if (!_hasDoubleJumped)
+        //    {
+        //        _rb.velocity += new Vector2(_rb.velocity.x, _jumpForce);
+        //        _hasDoubleJumped = true;
+        //    }
+        //}
         _rb.velocity = new Vector2(move, _rb.velocity.y);
     }
 
@@ -79,6 +96,7 @@ public class Player : MonoBehaviour, IDamageable
         RaycastHit2D hit = Physics2D.Raycast(transform.position, Vector2.down, 0.8f, 1 << 8);
         if (hit.collider != null)
         {
+            _hasDoubleJumped = true;
             if (_resetJump == false)
             {
                 _playerAnim.Jumping(false);
@@ -133,9 +151,16 @@ public class Player : MonoBehaviour, IDamageable
         UIManager.Instance.OpenShop(_diamond);
     }
 
-    public void Damage()
+    void GetItemCheck()
     {
-        Health--;
+        _hasFlameSword = GameManager.Instance.HasFlameSword;
+        _hasBoots = GameManager.Instance.HasFlightBoots;
+        _hasKey = GameManager.Instance.HasCastleKey;
+    }
+
+    public void Damage(int damageAmount)
+    {
+        Health -= damageAmount;
         Debug.Log("Current health: " + Health);
         UIManager.Instance.UpdateLives(Health);
         if (Health < 1)

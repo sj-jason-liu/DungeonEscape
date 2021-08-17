@@ -12,13 +12,13 @@ public class Skeleton : Enemy, IDamageable
         Health = health;
     }
 
-    public void Damage()
+    public void Damage(int damageAmount)
     {
         if (isDead)
             return;
         
         Debug.Log(name + " Damage()");
-        Health--;
+        Health -= damageAmount;
         anim.SetTrigger("Hit");
         hasHit = true;
         anim.SetBool("InCombat", true);

@@ -16,12 +16,12 @@ public class Spider : Enemy, IDamageable
         Health = health;
     }
 
-    public void Damage()
+    public void Damage(int damageAmout)
     {
         if (isDead)
             return;
 
-        Health--;
+        Health -= damageAmout;
         if(Health < 1)
         {
             isDead = true;

@@ -65,8 +65,19 @@ public class ShopSystem : MonoBehaviour
     {
         if(_player.CurrentDiamondCount() >= _currentItemCost)
         {
-            //get item
             _player.PurchasedDiamondCount(_currentItemCost);
+            switch(_currentSelectedItem)
+            {
+                case 0:
+                    GameManager.Instance.HasFlameSword = true;
+                    break;
+                case 1:
+                    GameManager.Instance.HasFlightBoots = true;
+                    break;
+                case 2:
+                    GameManager.Instance.HasCastleKey = true;
+                    break;
+            }
         }
         else
         {
