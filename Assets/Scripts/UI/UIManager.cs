@@ -31,6 +31,8 @@ public class UIManager : MonoBehaviour
     private Text _gemCountText;
     [SerializeField]
     private Image[] _lives;
+    [SerializeField]
+    private GameObject _gameOverScreen;
 
     public void OpenShop(int gemCount)
     {
@@ -55,5 +57,10 @@ public class UIManager : MonoBehaviour
         {
             _lives[i-1].enabled = false;
         }
+    }
+
+    public void GameOverScreen()
+    {
+        _gameOverScreen.SetActive(true);
     }
 }

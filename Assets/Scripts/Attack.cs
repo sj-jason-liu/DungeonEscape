@@ -5,7 +5,7 @@ using UnityEngine;
 public class Attack : MonoBehaviour
 {
     private bool _canAttack = true;
-    [SerializeField][Range(1,3)]
+    [SerializeField][Range(1,4)]
     private int _damageAmout = 1;
 
     private void OnTriggerEnter2D(Collider2D other)

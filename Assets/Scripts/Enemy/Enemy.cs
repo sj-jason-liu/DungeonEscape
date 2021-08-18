@@ -40,7 +40,7 @@ public abstract class Enemy : MonoBehaviour
         player = GameObject.FindGameObjectWithTag("Player").GetComponent<Player>();
         if(player == null)
         {
-            Debug.LogError("Player if NULL");
+            Debug.LogError("Player is NULL!");
         }
         currentSpriteScale = sprite.transform.localScale;
         //Debug.Log("Scale of " + name + " sprite: " + currentSpriteScale);
@@ -89,18 +89,34 @@ public abstract class Enemy : MonoBehaviour
             anim.SetBool("InCombat", false);
         }
 
-        Vector3 direction = player.transform.localPosition - transform.localPosition;
+        Vector3 direction = player.transform.position - transform.position;
         if(anim.GetBool("InCombat"))
         {
             if(direction.x > 0)
             {
-                sprite.transform.localScale
+                if(!movingLeft) //moving right
+                {
+                    sprite.transform.localScale
                     = new Vector3(currentSpriteScale.x * 1, currentSpriteScale.y, currentSpriteScale.z);
+                }
+                else
+                {
+                    sprite.transform.localScale
+                    = new Vector3(currentSpriteScale.x * -1, currentSpriteScale.y, currentSpriteScale.z);
+                }
             }
             else if(direction.x < 0)
             {
-                sprite.transform.localScale
+                if(movingLeft)
+                {
+                    sprite.transform.localScale
+                    = new Vector3(currentSpriteScale.x * 1, currentSpriteScale.y, currentSpriteScale.z);
+                }
+                else
+                {
+                    sprite.transform.localScale
                     = new Vector3(currentSpriteScale.x * -1, currentSpriteScale.y, currentSpriteScale.z);
+                } 
             }
         }
     }

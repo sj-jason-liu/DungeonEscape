@@ -172,12 +172,19 @@ public class Player : MonoBehaviour, IDamageable
         if (Health < 1)
         {
             _playerAnim.Death();
+            StartCoroutine(GameOverScreenRoutine());
             _isDead = true;
         }
     }
 
-    public bool DeathState()
+    IEnumerator GameOverScreenRoutine()
     {
+        yield return new WaitForSeconds(2f);
+        UIManager.Instance.GameOverScreen();
+    }
+
+    public bool DeathState()
+    {            
         return _isDead;
     }
 }
