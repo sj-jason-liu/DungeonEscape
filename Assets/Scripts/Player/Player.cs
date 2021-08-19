@@ -171,13 +171,14 @@ public class Player : MonoBehaviour, IDamageable
     {
         Health -= damageAmount;
         Debug.Log("Current health: " + Health);
-        UIManager.Instance.UpdateLives(Health);
         if (Health < 1)
         {
+            Health = 0;
             _playerAnim.Death();
             StartCoroutine(GameOverScreenRoutine());
             _isDead = true;
         }
+        UIManager.Instance.UpdateLives(Health);
     }
 
     IEnumerator GameOverScreenRoutine()
