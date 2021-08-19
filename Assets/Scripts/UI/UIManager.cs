@@ -56,6 +56,8 @@ public class UIManager : MonoBehaviour
         for(int i = 4; i != livesRemaining; i--)
         {
             _lives[i-1].enabled = false;
+            if (i < 0)
+                i = 0;
         }
     }
 

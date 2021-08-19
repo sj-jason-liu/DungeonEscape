@@ -23,6 +23,8 @@ public class Player : MonoBehaviour, IDamageable
     private PlayerAnimation _playerAnim;
     private SpriteRenderer _sprite;
     private GameObject _swordArcObject;
+    [SerializeField]
+    private GameObject _introScene;
 
     public int Health { get; set; }
     
@@ -41,6 +43,7 @@ public class Player : MonoBehaviour, IDamageable
             Debug.LogError("Sword Arc is NULL!");
         }
         Health = _health;
+        Invoke("IntroSceneStart", 2f);
     }
 
     void Update()
@@ -181,6 +184,11 @@ public class Player : MonoBehaviour, IDamageable
     {
         yield return new WaitForSeconds(2f);
         UIManager.Instance.GameOverScreen();
+    }
+
+    void IntroSceneStart()
+    {
+        _introScene.SetActive(true);
     }
 
     public bool DeathState()

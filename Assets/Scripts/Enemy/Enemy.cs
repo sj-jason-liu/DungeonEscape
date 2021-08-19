@@ -21,7 +21,7 @@ public abstract class Enemy : MonoBehaviour
     protected Animator anim;
     protected SpriteRenderer sprite;
     protected Player player;
-    protected bool movingLeft;
+    [SerializeField] protected bool movingLeft;
     protected bool hasHit;
     protected bool isDead;
 
@@ -89,20 +89,22 @@ public abstract class Enemy : MonoBehaviour
             anim.SetBool("InCombat", false);
         }
 
-        Vector3 direction = player.transform.position - transform.position;
+        Vector3 direction = player.transform.GetChild(0).transform.position - transform.position;
         if(anim.GetBool("InCombat"))
         {
-            if(direction.x > 0)
+            Debug.Log("Player position: " + player.transform.GetChild(0).transform.position + " and Enemy position: " + transform.position);
+            Debug.Log("Direction.X: " + direction.x);
+            if (direction.x > 0)
             {
-                if(!movingLeft) //moving right
+                if(movingLeft)
                 {
                     sprite.transform.localScale
-                    = new Vector3(currentSpriteScale.x * 1, currentSpriteScale.y, currentSpriteScale.z);
+                    = new Vector3(currentSpriteScale.x * -1, currentSpriteScale.y, currentSpriteScale.z);
                 }
                 else
                 {
                     sprite.transform.localScale
-                    = new Vector3(currentSpriteScale.x * -1, currentSpriteScale.y, currentSpriteScale.z);
+                    = new Vector3(currentSpriteScale.x * 1, currentSpriteScale.y, currentSpriteScale.z);
                 }
             }
             else if(direction.x < 0)
