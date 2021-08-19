@@ -96,29 +96,11 @@ public abstract class Enemy : MonoBehaviour
             Debug.Log("Direction.X: " + direction.x);
             if (direction.x > 0)
             {
-                if(movingLeft)
-                {
-                    sprite.transform.localScale
-                    = new Vector3(currentSpriteScale.x * -1, currentSpriteScale.y, currentSpriteScale.z);
-                }
-                else
-                {
-                    sprite.transform.localScale
-                    = new Vector3(currentSpriteScale.x * 1, currentSpriteScale.y, currentSpriteScale.z);
-                }
+                movingLeft = false;
             }
             else if(direction.x < 0)
             {
-                if(movingLeft)
-                {
-                    sprite.transform.localScale
-                    = new Vector3(currentSpriteScale.x * 1, currentSpriteScale.y, currentSpriteScale.z);
-                }
-                else
-                {
-                    sprite.transform.localScale
-                    = new Vector3(currentSpriteScale.x * -1, currentSpriteScale.y, currentSpriteScale.z);
-                } 
+                movingLeft = true;
             }
         }
     }
