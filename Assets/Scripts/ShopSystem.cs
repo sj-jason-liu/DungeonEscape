@@ -5,12 +5,12 @@ using UnityEngine;
 public class ShopSystem : MonoBehaviour
 {
     [SerializeField]
-    private GameObject _shopPanel;
+    private GameObject _shopPanel, _playerGemCount;
 
     private Player _player;
 
     private int _currentSelectedItem;
-    private int _currentItemCost;
+    private int _currentItemCost = 1000;
     private int _currentGemCount;
 
     private void OnTriggerEnter2D(Collider2D other)
@@ -44,6 +44,7 @@ public class ShopSystem : MonoBehaviour
     public void SelectItem(int item)
     {
         _currentSelectedItem = item;
+        Debug.Log("Selected item: " + item);
         switch(item)
         {
             case 0:
@@ -82,6 +83,7 @@ public class ShopSystem : MonoBehaviour
         else
         {
             //error message or animation
+            _playerGemCount.GetComponent<Animation>().Play();
         }
     }
 }

@@ -32,7 +32,7 @@ public class UIManager : MonoBehaviour
     [SerializeField]
     private Image[] _lives;
     [SerializeField]
-    private GameObject _gameOverScreen;
+    private GameObject _gameOverScreen, _needKeyScreen;
 
     public void OpenShop(int gemCount)
     {
@@ -59,6 +59,18 @@ public class UIManager : MonoBehaviour
             if (i < 0)
                 i = 0;
         }
+    }
+
+    public void NeedKeyText()
+    {
+        _needKeyScreen.SetActive(true);
+        StartCoroutine(NeedKeyTextRoutine());
+    }
+
+    IEnumerator NeedKeyTextRoutine()
+    {
+        yield return new WaitForSeconds(3f);
+        _needKeyScreen.SetActive(false);
     }
 
     public void GameOverScreen()

@@ -178,6 +178,10 @@ public class Player : MonoBehaviour, IDamageable
             StartCoroutine(GameOverScreenRoutine());
             _isDead = true;
         }
+        else
+        {
+            _playerAnim.Hit();
+        }
         UIManager.Instance.UpdateLives(Health);
     }
 

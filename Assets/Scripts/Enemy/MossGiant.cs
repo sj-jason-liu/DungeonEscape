@@ -21,8 +21,6 @@ public class MossGiant : Enemy, IDamageable
         Debug.Log(name + " Damage()");
         Health -= damageAmount;
         anim.SetTrigger("Hit");
-        hasHit = true;
-        anim.SetBool("InCombat", true);
 
         if (Health < 1)
         {

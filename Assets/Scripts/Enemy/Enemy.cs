@@ -22,8 +22,7 @@ public abstract class Enemy : MonoBehaviour
     protected SpriteRenderer sprite;
     protected Player player;
     [SerializeField] protected bool movingLeft;
-    protected bool hasHit;
-    protected bool isDead;
+    protected bool hasHit , isDead, hasDetected;
 
     public virtual void Init()
     {
@@ -83,8 +82,17 @@ public abstract class Enemy : MonoBehaviour
         if(!hasHit)
             transform.position = Vector3.MoveTowards(transform.position, targetPosition, speed * Time.deltaTime);
 
-        if(Vector3.Distance(transform.position, player.transform.position) > detectRange || player.DeathState())
+        if(Vector3.Distance(transform.position, player.transform.position) < detectRange)
         {
+            if(!hasDetected)
+            {
+                DetectPlayer();
+                hasDetected = true;
+            }
+        }
+        else if(Vector3.Distance(transform.position, player.transform.position) > detectRange || player.DeathState())
+        {
+            hasDetected = false;
             hasHit = false;
             anim.SetBool("InCombat", false);
         }
@@ -92,8 +100,6 @@ public abstract class Enemy : MonoBehaviour
         Vector3 direction = player.transform.GetChild(0).transform.position - transform.position;
         if(anim.GetBool("InCombat"))
         {
-            Debug.Log("Player position: " + player.transform.GetChild(0).transform.position + " and Enemy position: " + transform.position);
-            Debug.Log("Direction.X: " + direction.x);
             if (direction.x > 0)
             {
                 movingLeft = false;
@@ -103,6 +109,13 @@ public abstract class Enemy : MonoBehaviour
                 movingLeft = true;
             }
         }
+    }
+
+    private void DetectPlayer()
+    {
+        anim.SetTrigger("DetectPlayer");
+        hasHit = true;
+        anim.SetBool("InCombat", true);
     }
 
     private void OnDrawGizmos()
