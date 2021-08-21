@@ -79,6 +79,7 @@ public class ShopSystem : MonoBehaviour
                     GameManager.Instance.HasCastleKey = true;
                     break;
             }
+            UIManager.Instance.UpdateHoldedItem(_currentSelectedItem);
         }
         else
         {

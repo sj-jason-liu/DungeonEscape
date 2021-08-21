@@ -32,7 +32,9 @@ public class UIManager : MonoBehaviour
     [SerializeField]
     private Image[] _lives;
     [SerializeField]
-    private GameObject _gameOverScreen, _needKeyScreen;
+    private GameObject _gameOverScreen, _needKeyScreen, _gamePassScreen;
+    [SerializeField]
+    private Image[] _holdedItems;
 
     public void OpenShop(int gemCount)
     {
@@ -61,6 +63,12 @@ public class UIManager : MonoBehaviour
         }
     }
 
+    public void UpdateHoldedItem(int itemID)
+    {
+        _holdedItems[itemID].enabled = false;
+        _holdedItems[itemID + 3].enabled = true;
+    }
+
     public void NeedKeyText()
     {
         _needKeyScreen.SetActive(true);
@@ -71,6 +79,11 @@ public class UIManager : MonoBehaviour
     {
         yield return new WaitForSeconds(3f);
         _needKeyScreen.SetActive(false);
+    }
+
+    public void GamePassScreen()
+    {
+        _gamePassScreen.SetActive(true);
     }
 
     public void GameOverScreen()

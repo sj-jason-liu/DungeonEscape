@@ -15,7 +15,7 @@ public class Player : MonoBehaviour, IDamageable
     [SerializeField]
     private int _diamond;
 
-    private bool _grounded, _resetJump, _hasDoubleJumped, _isDead;
+    private bool _grounded, _resetJump, _hasDoubleJumped, _isDead, _isPass;
     [SerializeField]
     private bool _hasFlameSword, _hasBoots, _hasKey;
     
@@ -48,7 +48,7 @@ public class Player : MonoBehaviour, IDamageable
 
     void Update()
     {
-        if (_isDead)
+        if (_isDead || _isPass)
             return;
 
         GetItemCheck();
@@ -199,5 +199,11 @@ public class Player : MonoBehaviour, IDamageable
     public bool DeathState()
     {            
         return _isDead;
+    }
+
+    public bool GamePassState()
+    {
+        _isPass = true;
+        return _isPass;
     }
 }
