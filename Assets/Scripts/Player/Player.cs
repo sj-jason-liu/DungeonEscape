@@ -49,7 +49,10 @@ public class Player : MonoBehaviour, IDamageable
     void Update()
     {
         if (_isDead || _isPass)
+        {
+            _rb.velocity = new Vector2(0f, 0f);
             return;
+        }
 
         GetItemCheck();
 
