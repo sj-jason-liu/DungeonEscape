@@ -23,7 +23,7 @@ public class AudioManager : MonoBehaviour
     }
 
     [SerializeField]
-    private AudioClip _shopOpen;
+    private AudioClip _shopOpen, _pickUpSword;
     private AudioSource _audioSource;
 
     private void Start()
@@ -40,4 +40,10 @@ public class AudioManager : MonoBehaviour
         _audioSource.clip = _shopOpen;
         _audioSource.Play();
     }
+
+    public void GetSwordSound()
+    {
+        _audioSource.clip = _pickUpSword;
+        _audioSource.Play();
+    }    
 }

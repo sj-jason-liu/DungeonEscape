@@ -72,6 +72,7 @@ public class ShopSystem : MonoBehaviour
             {
                 case 0:
                     GameManager.Instance.HasFlameSword = true;
+                    AudioManager.Instance.GetSwordSound();
                     break;
                 case 1:
                     GameManager.Instance.HasFlightBoots = true;
