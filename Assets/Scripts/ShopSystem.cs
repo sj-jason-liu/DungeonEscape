@@ -21,6 +21,7 @@ public class ShopSystem : MonoBehaviour
             if(_player != null)
             {
                 UIManager.Instance.OpenShop(_player.CurrentDiamondCount());
+                AudioManager.Instance.OpenShopSound();
                 _currentGemCount = _player.CurrentDiamondCount();
             }
             if(_shopPanel != null)

@@ -11,28 +11,26 @@ public class AdsManager : MonoBehaviour, IUnityAdsListener
     [SerializeField]
     private string _adUnitId, _androidGameId;
     private Player _player;
-    [SerializeField]
-    private Button _watchAdButton;
 
     private void Awake()
     {
         _player = GameObject.FindGameObjectWithTag("Player").GetComponent<Player>();
         if (_player == null)
             Debug.LogError("Player is NULL!");
-        _watchAdButton.interactable = Advertisement.IsReady(_adUnitId);
         Advertisement.AddListener(this);
-        Advertisement.Initialize(_androidGameId, true);
+        Advertisement.Initialize(_androidGameId, false);
+        Advertisement.Load(_adUnitId);
     }
 
     public void PlayRewardAd()
     {
-        Advertisement.Show(_adUnitId);
+        if(Advertisement.IsReady(_adUnitId))
+            Advertisement.Show(_adUnitId);
     }
 
     public void OnUnityAdsReady(string placementId)
     {
-        if (placementId == _adUnitId)
-            _watchAdButton.interactable = true;
+        Debug.Log("Ads is ready!");
     }
 
     public void OnUnityAdsDidError(string message)

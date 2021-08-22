@@ -8,6 +8,7 @@ public class GameClearScreen : MonoBehaviour
     public void RateGame()
     {
         //direct to app page to rate
+        Application.OpenURL("https://google.com");
         Debug.Log("Link to Google Play page.");
     }
 
