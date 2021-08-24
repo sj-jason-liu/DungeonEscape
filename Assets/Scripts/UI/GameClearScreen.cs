@@ -8,7 +8,7 @@ public class GameClearScreen : MonoBehaviour
     public void RateGame()
     {
         //direct to app page to rate
-        Application.OpenURL("https://google.com");
+        Application.OpenURL("https://play.google.com/store/apps/details?id=com.ViPGameStudio.DungeonEscape");
         Debug.Log("Link to Google Play page.");
     }
 
